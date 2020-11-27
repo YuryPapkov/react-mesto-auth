@@ -1,13 +1,24 @@
 import React from 'react';
 import Header from './Header';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import InfoTooltip from './InfoTooltip';
+import * as auth from '../utils/Auth.js';
 
 function Register() {
+  const history = useHistory({});
 
   const [data, setData] = React.useState({
     email: '',
     password: ''
   });
+  const [isInfoBoxOpened, setIsInfoBoxOpened] = React.useState(false);
+  const [isSuccess, setIsSuccess] = React.useState(false);
+
+
+  function handleClose() {
+    setIsInfoBoxOpened(false);
+    isSuccess && history.push('/sign-in');
+  }
 
   function handleChange(evt) {
     const { name, value } = evt.target;
@@ -15,11 +26,23 @@ function Register() {
       ...data,
       [name]: value
     });
-    console.log(data);
+    //console.log(data);
   }
 
   function handleSubmit(evt) {
-    evt.preventdefault();
+    evt.preventDefault();
+    //console.log(data);
+    auth.register(data)
+      .then((res) => {
+        setIsSuccess(true);
+        setIsInfoBoxOpened(true);
+        //console.log(res);
+      })
+      .catch((err) => {
+        setIsSuccess(false);
+        setIsInfoBoxOpened(true)
+        //console.log(err);
+      })
   }
   return (
     <div>
@@ -66,6 +89,7 @@ function Register() {
           </button>
         <Link to="/login" className="auth-form__link">Уже зарегистрированы? Войти.</Link>
       </form>
+      <InfoTooltip isOpen={isInfoBoxOpened} isSuccess={isSuccess} onClose={handleClose} />
 
 
     </div>

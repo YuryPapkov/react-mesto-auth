@@ -7,7 +7,7 @@ import Register from './Register';
 
 
 function App() {
-  const isLoggedIn = true;
+  const isLoggedIn = false;
   return (
     <div className="App">
       <div className="body">

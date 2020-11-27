@@ -18,7 +18,7 @@ function Login() {
   }
 
   function handleSubmit(evt) {
-    evt.preventdefault();
+    evt.preventDefault();
   }
   return (
     <div>
