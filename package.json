@@ -4,7 +4,7 @@
   "private": true,
   "author": "Yury Papkov",
   "description": "Yandex-Praktikum training project",
-  "homepage": "./react-mesto-auth",
+  "homepage": "./",
   "proxy": "http://localhost:3000",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
