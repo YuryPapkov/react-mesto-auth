@@ -21,20 +21,20 @@ function Login({ handleLogin }) {
     validatorRef.current.enableValidation();
   }, []);
 
-  React.useEffect(() => {
-    checkAuth();
-  }, [])
+  // React.useEffect(() => {
+  //   checkAuth();
+  // }, [data])
 
-  function checkAuth() {
-    auth.checkToken()
-      .then((res) => {
-        handleLogin(res.data.email);
-        history.push('/home');
-      })
-      .catch((err) => {
-        history.push('/sign-in');
-      });
-  }
+  // function checkAuth() {
+  //   auth.checkToken()
+  //     .then((res) => {
+  //       handleLogin(res.data.email);
+  //       history.push('/home');
+  //     })
+  //     .catch((err) => {
+  //       history.push('/sign-in');
+  //     });
+  // }
 
   function handleChange(evt) {
     const { name, value } = evt.target;
@@ -63,7 +63,7 @@ function Login({ handleLogin }) {
           })
           handleLogin(data.email);
           console.log('submitting');
-          history.push('/home');
+          history.push('/');
         }
       })
       .catch((err) => {
