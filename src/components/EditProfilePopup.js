@@ -14,7 +14,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
     const form = document.forms.edit;
     validatorRef.current = new Validator(validationConfig, form);
     validatorRef.current.enableValidation();
-  },[]);
+  }, []);
 
   React.useEffect(() => {
     setName(currentUser.name);
@@ -46,7 +46,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
     validatorRef.current.clearErrors();
     onClose();
   }
-
+  console.log(currentUser);
   return (
     <PopupWithForm
       title="Редактировать профиль"

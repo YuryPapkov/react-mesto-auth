@@ -3,6 +3,7 @@ import Header from './Header';
 import { Link, useHistory } from 'react-router-dom';
 import InfoTooltip from './InfoTooltip';
 import * as auth from '../utils/Auth.js';
+import { Validator, validationForLoginConfig } from '../utils/Validator';
 
 function Register() {
   const history = useHistory({});
@@ -13,7 +14,13 @@ function Register() {
   });
   const [isInfoBoxOpened, setIsInfoBoxOpened] = React.useState(false);
   const [isSuccess, setIsSuccess] = React.useState(false);
+  const validatorRef = React.useRef();
 
+  React.useEffect(() => {
+    const form = document.forms.login;
+    validatorRef.current = new Validator(validationForLoginConfig, form);
+    validatorRef.current.enableValidation();
+  }, []);
 
   function handleClose() {
     setIsInfoBoxOpened(false);
@@ -68,7 +75,7 @@ function Register() {
           onChange={handleChange}
           placeholder="Email"
         />
-        <span className="popup__error popup__error_type_name"></span>
+        <span className="popup__error popup__error_type_email"></span>
         <input
           name="password"
           className="auth-form__input"
@@ -81,7 +88,7 @@ function Register() {
           onChange={handleChange}
           placeholder="Пароль"
         />
-        <span className="popup__error popup__error_type_occupation"></span>
+        <span className="popup__error popup__error_type_password"></span>
         <button
           type="submit"
           className="button auth-form__save-button">

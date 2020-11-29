@@ -7,26 +7,46 @@ import Register from './Register';
 
 
 function App() {
-  const isLoggedIn = false;
+  //const history = useHistory();
+  //console.log(useHistory());
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [email, setEmail] = React.useState('');
+
+
+
+
+
+
+  function handleLogin(email) {
+    setIsLoggedIn(true);
+    setEmail(email);
+  }
+  function handleLogout() {
+    setIsLoggedIn(false);
+    localStorage.removeItem('jwt');
+    //history.push('/sign-in');
+  }
+
+
   return (
-    <div className="App">
-      <div className="body">
-        <BrowserRouter>
+    <BrowserRouter>
+      <div className="App">
+        <div className="body">
           <Switch>
             <Route path='/sign-up'>
               <Register />
             </Route>
             <Route path='/sign-in'>
-              <Login />
+              <Login handleLogin={handleLogin} />
             </Route>
-            <ProtectedRoute path='/home' loggedIn={isLoggedIn} component={Home} />
+            <ProtectedRoute path='/home' loggedIn={isLoggedIn} email={email} onLogout={handleLogout} component={Home} />
             <Route>
               {isLoggedIn ? <Redirect to='/home' /> : <Redirect to='/sign-in' />};
         </Route>
           </Switch>
-        </BrowserRouter>
+        </div>
       </div>
-    </div>
+    </BrowserRouter>
   );
 }
 

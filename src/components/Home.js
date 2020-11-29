@@ -13,7 +13,7 @@ import ConfirmPopup from './ConfirmPopup';
 import ErrorPopup from './ErrorPopup';
 
 
-function Home() {
+function Home({ email, onLogout }) {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
 
@@ -27,7 +27,7 @@ function Home() {
   const [willBeDeletedCard, setWillBeDeletedCard] = React.useState({});
   const [errorMessage, setErrorMessage] = React.useState('');
 
-  const [currentUser, setCurrentUser] = React.useState({});
+  const [currentUser, setCurrentUser] = React.useState({ name: '', about: '', avatar: '' });
   const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
@@ -153,6 +153,7 @@ function Home() {
       });
   }
 
+
   return (
 
     <Route path='/home'>
@@ -160,8 +161,11 @@ function Home() {
       <CurrentUserContext.Provider value={currentUser}>
 
         <Header >
-          <p>Э-мэйл </p>
-          <p>Выйти </p>
+          <div className="header__info-box">
+            <p className="header__link">{email} </p>
+            <button className="header__link header__link_theme_grey" onClick={onLogout}>Выйти </button>
+          </div>
+
         </Header>
         <Main
           onEditProfile={handleEditProfileClick}

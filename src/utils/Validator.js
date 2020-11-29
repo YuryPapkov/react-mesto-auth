@@ -95,4 +95,13 @@ const validationConfig = {
   errorClass: 'popup__error_visible'
 };
 
-export { Validator, validationConfig };
+const validationForLoginConfig = {
+  formSelector: '.auth-form',
+  inputSelector: '.auth-form__input',
+  submitButtonSelector: '.auth-form__save-button',
+  inactiveButtonClass: 'popup__save-button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+};
+
+export { Validator, validationConfig, validationForLoginConfig };
