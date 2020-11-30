@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Redirect, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
 //import Home from './Home';
 import Login from './Login';
@@ -64,7 +64,7 @@ function App() {
     auth.checkToken()
       .then((res) => {
         handleLogin(res.data.email);
-        history.push('/home');
+        history.push('/');
       })
       .catch((err) => {
         history.push('/sign-in');
@@ -198,13 +198,14 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="App">
         <div className="body">
-          <Header >
-            <div className="header__info-box">
-              <p className="header__link">{email} </p>
-              <button className="header__link header__link_theme_grey" onClick={handleLogout}>Выйти </button>
-            </div>
-
-          </Header>
+          <Switch>
+            <Route exact path='/'>
+              <Header email={email} onLogout={handleLogout} />
+            </Route>
+            <Route path='/:page'>
+              <Header />
+            </Route>
+          </Switch>
           <Switch>
             <Route path='/sign-up'>
               <Register />
@@ -213,9 +214,7 @@ function App() {
               <Login handleLogin={handleLogin} />
             </Route>
             <ProtectedRoute
-
               path='/'
-
               onEditProfile={handleEditProfileClick}
               onAddPlace={handleAddPlaceClick}
               onEditAvatar={handleEditAvatarClick}
@@ -226,34 +225,27 @@ function App() {
               loggedIn={isLoggedIn}
               component={Main}
             />
-            <Route>
-              {isLoggedIn ? <Redirect to='/' /> : <Redirect to='/sign-in' />};
-              </Route>
           </Switch>
           <Footer />
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
             onUpdateUser={handleUpdateUser} />
-
           <AddPlacePopup
             isOpen={isAddPlacePopupOpen}
             submitButtonText={addPlacePopupSubmitButtonText}
             onClose={closeAllPopups}
             onAddPlace={handleAddPlaceSubmit} />
-
           <EditAvatarPopup
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
             onUpdateAvatar={handleUpdateAvatar}
           />
-
           <ConfirmPopup
             isOpen={isConfirmPopupOpen}
             onClose={closeAllPopups}
             onConfirm={handleDeleteCardConfirmation}
           />
-
           <ImagePopup
             card={selectedCard}
             onClose={closeAllPopups}

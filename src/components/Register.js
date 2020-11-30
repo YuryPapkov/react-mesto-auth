@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from './Header';
+//import Header from './Header';
 import { Link, useHistory } from 'react-router-dom';
 import InfoTooltip from './InfoTooltip';
 import * as auth from '../utils/Auth.js';
@@ -53,9 +53,9 @@ function Register() {
   }
   return (
     <div>
-      <Header >
+      {/* <Header >
         <Link to="/sign-in" className="header__link">Войти</Link>
-      </Header>
+      </Header> */}
 
       <form
         name='login'
@@ -94,7 +94,7 @@ function Register() {
           className="button auth-form__save-button">
           Зарегистрироваться
           </button>
-        <Link to="/login" className="auth-form__link">Уже зарегистрированы? Войти.</Link>
+        <Link to="/sign-in" className="auth-form__link">Уже зарегистрированы? Войти.</Link>
       </form>
       <InfoTooltip isOpen={isInfoBoxOpened} isSuccess={isSuccess} onClose={handleClose} />
 

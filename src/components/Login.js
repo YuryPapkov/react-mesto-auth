@@ -75,9 +75,9 @@ function Login({ handleLogin }) {
 
   return (
     <div>
-      <Header >
+      {/* <Header >
         <Link to="/sign-up" className="header__link">Регистрация</Link>
-      </Header>
+      </Header> */}
       <form
         name='login'
         onSubmit={handleSubmit}
