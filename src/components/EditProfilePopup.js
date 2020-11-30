@@ -46,7 +46,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
     validatorRef.current.clearErrors();
     onClose();
   }
-  console.log(currentUser);
+
   return (
     <PopupWithForm
       title="Редактировать профиль"

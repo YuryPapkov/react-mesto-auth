@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
-//import Home from './Home';
 import Login from './Login';
 import Register from './Register';
 import Header from './Header';
@@ -17,27 +16,21 @@ import AddPlacePopup from './AddPlacePopup';
 import ConfirmPopup from './ConfirmPopup';
 import ErrorPopup from './ErrorPopup';
 
-
-
 function App() {
   const history = useHistory();
-
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
 
   //Поднимаю стейт с текстом кнопки сабмита, чтобы иметь возможность возвратить ее в исходное
   //состояние при ошибке загрузки новой карточки (не сбрасывая поля ввода на форме)
   const [addPlacePopupSubmitButtonText, setAddPlacePopupSubmitButtonText] = React.useState('Сохранить');
-
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
   const [willBeDeletedCard, setWillBeDeletedCard] = React.useState({});
   const [errorMessage, setErrorMessage] = React.useState('');
-
   const [currentUser, setCurrentUser] = React.useState({ name: '', about: '', avatar: '' });
   const [cards, setCards] = React.useState([]);
-
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [email, setEmail] = React.useState('');
 
@@ -70,9 +63,6 @@ function App() {
         history.push('/sign-in');
       });
   }
-
-
-
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -148,7 +138,6 @@ function App() {
         setIsEditProfilePopupOpen(false);//Закрытие и повторное открытие окна сбрасывает
         setIsEditProfilePopupOpen(true); // текст кнопки сабмита на исходный
         setTimeout(() => { setErrorMessage('') }, 2000);
-
       });
   }
 
@@ -182,7 +171,6 @@ function App() {
       });
   }
 
-
   function handleLogin(email) {
     setIsLoggedIn(true);
     setEmail(email);
@@ -190,9 +178,7 @@ function App() {
   function handleLogout() {
     setIsLoggedIn(false);
     localStorage.removeItem('jwt');
-    //history.push('/sign-in');
   }
-
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

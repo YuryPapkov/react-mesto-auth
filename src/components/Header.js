@@ -4,7 +4,6 @@ import { useParams, Link } from 'react-router-dom';
 
 function Header({ email, onLogout }) {
   let { page } = useParams();
-  console.log(page);
 
   function renderHeader() {
     if (email) {
@@ -16,7 +15,7 @@ function Header({ email, onLogout }) {
       switch (page) {
         case 'sign-in': return (<Link to="/sign-up" className="header__link">Регистрация</Link>);
         case 'sign-up': return (<Link to="/sign-in" className="header__link">Вход</Link>);
-        default: return <p> </p>;
+        default: return (<Link to="/sign-in" className="header__link">Вход</Link>);
       }
     }
   }

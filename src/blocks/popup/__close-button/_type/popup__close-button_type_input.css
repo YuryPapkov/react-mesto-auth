@@ -1,5 +1,13 @@
 .popup__close-button_type_input {
-    position: absolute;
-    top: -48px;
-    right: -48px;
+  position: absolute;
+  top: -48px;
+  right: -48px;
+}
+
+@media(max-width: 550px) {
+  .popup__close-button_type_input {
+    top: -75px;
+    right: 50%;
+    transform: translate(50%);
+  }
 }

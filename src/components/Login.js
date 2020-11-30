@@ -1,6 +1,5 @@
 import React from 'react';
-import Header from './Header';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import InfoTooltip from './InfoTooltip';
 import * as auth from '../utils/Auth.js';
 import { Validator, validationForLoginConfig } from '../utils/Validator';
@@ -10,6 +9,7 @@ function Login({ handleLogin }) {
     email: '',
     password: ''
   });
+
   const history = useHistory();
   const [isInfoBoxOpened, setIsInfoBoxOpened] = React.useState(false);
   const [isSuccess, setIsSuccess] = React.useState(false);
@@ -21,28 +21,12 @@ function Login({ handleLogin }) {
     validatorRef.current.enableValidation();
   }, []);
 
-  // React.useEffect(() => {
-  //   checkAuth();
-  // }, [data])
-
-  // function checkAuth() {
-  //   auth.checkToken()
-  //     .then((res) => {
-  //       handleLogin(res.data.email);
-  //       history.push('/home');
-  //     })
-  //     .catch((err) => {
-  //       history.push('/sign-in');
-  //     });
-  // }
-
   function handleChange(evt) {
     const { name, value } = evt.target;
     setData({
       ...data,
       [name]: value
     });
-    console.log(data);
   }
 
   function handleClose() {
@@ -55,14 +39,12 @@ function Login({ handleLogin }) {
     auth.login(data)
       .then((res) => {
         if (res.token) {
-          console.log(res);
           localStorage.setItem('jwt', res.token);
           setData({
             ...data,
             password: ''
           })
           handleLogin(data.email);
-          console.log('submitting');
           history.push('/');
         }
       })

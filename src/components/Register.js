@@ -1,5 +1,4 @@
 import React from 'react';
-//import Header from './Header';
 import { Link, useHistory } from 'react-router-dom';
 import InfoTooltip from './InfoTooltip';
 import * as auth from '../utils/Auth.js';
@@ -33,29 +32,22 @@ function Register() {
       ...data,
       [name]: value
     });
-    //console.log(data);
   }
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    //console.log(data);
     auth.register(data)
       .then((res) => {
         setIsSuccess(true);
         setIsInfoBoxOpened(true);
-        //console.log(res);
       })
       .catch((err) => {
         setIsSuccess(false);
         setIsInfoBoxOpened(true)
-        //console.log(err);
       })
   }
   return (
     <div>
-      {/* <Header >
-        <Link to="/sign-in" className="header__link">Войти</Link>
-      </Header> */}
 
       <form
         name='login'
