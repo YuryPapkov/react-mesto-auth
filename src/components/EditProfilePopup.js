@@ -10,6 +10,22 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   const [submitButtonText, setSubmitButtonText] = React.useState('Сохранить');
   const validatorRef = React.useRef();
 
+  // В компонентах EditProfilePopup, EditAvatarPopup, AddPlacePopup
+  //Ref используется в качестве способа хранения данных внутри функционального компонента.
+  // Так как эти компоненты монтируются однократно при загрузке приложения,
+  //то возникает потребность очищать поля ошибок при закрытии модального окна.
+  //Для этого используется публичный метод clearErrors класса Validator.
+  //Если объявить константу validator внутри useEffect при монтировании, то мы не сможем обратиться
+  //к этой константе в функции handleClose (закрытия окна).
+  // Объявить validator просто в теле компонента тоже нельзя, так как нужен DOM-узел формы,
+  //а его по факту еще не будет в момент объявления, так как компонент формы еще не смонтирован.
+  //Поэтому для того чтобы обращаться к validator  из функции выхода из модального окна (handleClose),
+  //я выбрал useRef.
+  //В компонентах Register и Login действительно ref не нужен, так как эти компоненты монтируются и
+  //размонтируются в процессе работы и методом clearErrors не пользуются.
+  //Прошу Вас прокомментировать, если этот пункт может быть решен как то более изящно.
+  //Заранее спасибо.
+
   React.useEffect(() => {
     const form = document.forms.edit;
     validatorRef.current = new Validator(validationConfig, form);

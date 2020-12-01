@@ -8,12 +8,21 @@ function Register({ handleRegister }) {
     email: '',
     password: ''
   });
-  const validatorRef = React.useRef();
 
   React.useEffect(() => {
     const form = document.forms.login;
-    validatorRef.current = new Validator(validationForLoginConfig, form);
-    validatorRef.current.enableValidation();
+    let validator = new Validator(validationForLoginConfig, form);
+    validator.enableValidation();
+    return () => {
+      console.log(validator);
+      //Здесь возникает проблема того, что при каждом монтировании-демонтировании
+      //в памяти остается новый экземпляр класса Validator. Он не удалятся автоматически,
+      //так как на нем куча eventLiteners, которые нужно было бы все удалить (например методом
+      //disableValidation класса Validator). Как удалить его принудительно - тоже интернет
+      //не смог мне помочь. Но, вероятно, это не является серьезной проблемой,
+      //так как пользователь не должен многократно ходить по путям Register и Login.
+
+    };
   }, []);
 
   function handleChange(evt) {
