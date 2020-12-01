@@ -1,7 +1,4 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import InfoTooltip from './InfoTooltip';
-import * as auth from '../utils/Auth.js';
 import { Validator, validationForLoginConfig } from '../utils/Validator';
 
 function Login({ handleLogin }) {
@@ -10,9 +7,6 @@ function Login({ handleLogin }) {
     password: ''
   });
 
-  const history = useHistory();
-  const [isInfoBoxOpened, setIsInfoBoxOpened] = React.useState(false);
-  const [isSuccess, setIsSuccess] = React.useState(false);
   const validatorRef = React.useRef();
 
   React.useEffect(() => {
@@ -29,37 +23,18 @@ function Login({ handleLogin }) {
     });
   }
 
-  function handleClose() {
-    setIsInfoBoxOpened(false);
-    isSuccess && history.push('/sign-in');
-  }
-
   function handleSubmit(evt) {
     evt.preventDefault();
-    auth.login(data)
-      .then((res) => {
-        if (res.token) {
-          localStorage.setItem('jwt', res.token);
-          setData({
-            ...data,
-            password: ''
-          })
-          handleLogin(data.email);
-          history.push('/');
-        }
-      })
-      .catch((err) => {
-        setIsSuccess(false);
-        setIsInfoBoxOpened(true)
-        console.log(err);
-      })
+    handleLogin(data);
+    setData({
+      ...data,
+      password: ''
+    })
+
   }
 
   return (
     <div>
-      {/* <Header >
-        <Link to="/sign-up" className="header__link">Регистрация</Link>
-      </Header> */}
       <form
         name='login'
         onSubmit={handleSubmit}
@@ -100,9 +75,8 @@ function Login({ handleLogin }) {
           Войти
         </button>
       </form>
-      <InfoTooltip isOpen={isInfoBoxOpened} isSuccess={isSuccess} onClose={handleClose} />
-
     </div>
   );
 }
+
 export default Login;

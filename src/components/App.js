@@ -15,6 +15,7 @@ import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 import ConfirmPopup from './ConfirmPopup';
 import ErrorPopup from './ErrorPopup';
+import InfoTooltip from './InfoTooltip';
 
 function App() {
   const history = useHistory();
@@ -33,6 +34,13 @@ function App() {
   const [cards, setCards] = React.useState([]);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [email, setEmail] = React.useState('');
+
+  const [isInfoBoxOpened, setIsInfoBoxOpened] = React.useState(false);
+  const [isSuccess, setIsSuccess] = React.useState(false);
+  // const [data, setData] = React.useState({
+  //   email: '',
+  //   password: ''
+  // });
 
   React.useEffect(() => {
     const userFromServer = api.userDownload();
@@ -56,7 +64,8 @@ function App() {
   function checkAuth() {
     auth.checkToken()
       .then((res) => {
-        handleLogin(res.data.email);
+        setIsLoggedIn(true);
+        setEmail(res.data.email);
         history.push('/');
       })
       .catch((err) => {
@@ -171,10 +180,40 @@ function App() {
       });
   }
 
-  function handleLogin(email) {
+  function handleLogin(data) {
     setIsLoggedIn(true);
-    setEmail(email);
+    setEmail(data.email);
+    auth.login(data)
+      .then((res) => {
+        if (res.token) {
+          localStorage.setItem('jwt', res.token);
+          history.push('/');
+        }
+      })
+      .catch((err) => {
+        setIsSuccess(false);
+        setIsInfoBoxOpened(true)
+        console.log(err);
+      })
   }
+
+  function handleRegister(data) {
+    auth.register(data)
+      .then((res) => {
+        setIsSuccess(true);
+        setIsInfoBoxOpened(true);
+      })
+      .catch((err) => {
+        setIsSuccess(false);
+        setIsInfoBoxOpened(true)
+      })
+  }
+
+  function handleCloseInfoBox() {
+    setIsInfoBoxOpened(false);
+    isSuccess && history.push('/sign-in');
+  }
+
   function handleLogout() {
     setIsLoggedIn(false);
     localStorage.removeItem('jwt');
@@ -194,7 +233,7 @@ function App() {
           </Switch>
           <Switch>
             <Route path='/sign-up'>
-              <Register />
+              <Register handleRegister={handleRegister} />
             </Route>
             <Route path='/sign-in'>
               <Login handleLogin={handleLogin} />
@@ -213,6 +252,7 @@ function App() {
             />
           </Switch>
           <Footer />
+          <InfoTooltip isOpen={isInfoBoxOpened} isSuccess={isSuccess} onClose={handleCloseInfoBox} />
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
