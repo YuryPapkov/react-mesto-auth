@@ -59,7 +59,7 @@ const checkToken = () => {
         }
       })
   } else {
-    return Promise.reject(`Ошибка `)
+    return Promise.reject(`Ошибка: пользователь не авторизован `)
   }
 
 }

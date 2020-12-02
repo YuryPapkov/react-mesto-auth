@@ -37,10 +37,6 @@ function App() {
 
   const [isInfoBoxOpened, setIsInfoBoxOpened] = React.useState(false);
   const [isSuccess, setIsSuccess] = React.useState(false);
-  // const [data, setData] = React.useState({
-  //   email: '',
-  //   password: ''
-  // });
 
   React.useEffect(() => {
     const userFromServer = api.userDownload();
@@ -69,6 +65,7 @@ function App() {
         history.push('/');
       })
       .catch((err) => {
+        console.log(err)
         history.push('/sign-in');
       });
   }
